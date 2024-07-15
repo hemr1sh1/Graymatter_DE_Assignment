@@ -1,0 +1,51 @@
+CREATE DATABASE NewDB
+CREATE SCHEMA NewSchema
+CREATE TABLE NewSchema.NewTable(
+NEW_ID INT NOT NULL PRIMARY KEY,
+NEW_NAME VARCHAR(20) NOT NULL)
+-- creating new db and schema and table
+
+USE NewDB
+ALTER TABLE NewSchema.NewTable
+ALTER COLUMN NEW_NAME INT
+
+ALTER TABLE NewSchema.NewTable
+ADD CONSTRAINT CC_NAME
+CHECK (NEW_NAME > 100)
+
+ALTER TABLE NewSchema.NewTable
+ADD AUTO_INC INT IDENTITY(10,10)
+--Altering
+
+USE AdventureWorks2022
+
+select * FROM HumanResources.Department d 
+join HumanResources.EmployeeDepartmentHistory ed on d.DepartmentID = ed.DepartmentID 
+join HumanResources.Shift s on ed.ShiftID = s.ShiftID
+--joining
+
+create view v_empshift2 as
+select d.Name, totalpershift = count(d.Name), s.StartTime, s.EndTime FROM HumanResources.Department d 
+join HumanResources.EmployeeDepartmentHistory ed on d.DepartmentID = ed.DepartmentID 
+join HumanResources.Shift s on ed.ShiftID = s.ShiftID
+group by d.Name, s.StartTime, s.EndTime
+--creating views
+select * from v_empshift2
+
+create table #temptbl(
+a int,
+b int)
+insert into #temptbl values(1,2)
+select * from #temptbl
+--temp table
+
+SELECT * FROM Person.PhoneNumberType
+INSERT INTO Person.PhoneNumberType(Name) VALUES('Fax',GETDATE())
+--Inserting when one column is an identity column
+
+SELECT * FROM HumanResources.Shift
+-- Analyzing Adventure works
+
+create index i_HR_DEPT 
+on HumanResources.Department(Name, GroupName);
+--Indexing
