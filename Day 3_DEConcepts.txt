@@ -1,0 +1,124 @@
+
+--scd type 1, 2 and 3 tables
+create table scd1(
+serial int identity(1,1) primary key,
+cus_name varchar(25))
+
+insert into scd1(cus_name) values('Amarnath'),('Dhananjay Poojary'),('Shetty'),('Reddy')
+update scd1 set cus_name = 'Hemrishi Poojary' where serial = 2
+
+create table scd2(
+serial_sur int identity(1,1) primary key,
+serial int,
+cus_name varchar(25),
+place varchar(25),
+fromdate datetime default getdate(),
+todate datetime default null)
+
+insert into scd2(serial,cus_name,place) values(1,'Hemrishi','Bengaluru'),(2,'Sharmila','Kundapura'),(3,'Varsha','Mumbai'),(4,'Jayanth','Chintamani')
+insert into scd2(serial,cus_name,place) values(2,'Sharmila','Bengaluru')
+update scd2 set todate = getdate() where cus_name = 'Sharmila' and todate is null
+
+create table scd3(
+serial int identity(1,1) primary key,
+cus_name varchar(25),
+phone varchar(10))
+
+insert into scd3(cus_name,phone) values('Hemrishi','9988889998')
+
+alter table scd3
+add oldphone varchar(10)
+
+update scd3 set oldphone = phone, phone = '9988998898' where cus_name = 'Hemrishi'
+
+select* from scd1
+select* from scd2
+select* from scd3
+
+--CDC
+EXEC sys.sp_cdc_enable_db --enable cdc on db
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'scd2',
+@role_name = null; --enable cdc on table
+
+select * from scd2
+select * from cdc.dbo_scd2_CT
+
+insert into scd2(serial,cus_name,place) values (5,'Yogi','Bengaluru')
+insert into scd2(serial,cus_name,place) values (6,'Baggy','Montreal')
+insert into scd2(serial,cus_name,place) values (7,'Poorna','Bengaluru')
+insert into scd2(serial,cus_name,place) values (8,'Mithun','Bengaluru')
+delete from scd2 where serial = 4
+
+select * from cdc.dbo_scd2_CT
+
+
+--Casting
+Select SalesOrderID, OrderDate, cast(OrderDate as date) as NewOrderDate from Sales.SalesOrderHeader
+
+--Extracting domain name from mailID
+Select EmailAddress, substring(EmailAddress, CHARINDEX('@',EmailAddress)+1, len(EmailAddress))
+as DomainName 
+from Person.EmailAddress
+
+--creating function for extracting
+create function extractDomain(@mail nvarchar(50))
+returns nvarchar(20)
+as 
+begin
+	declare @domain nvarchar(20)
+	set @domain = SUBSTRING(@mail, charindex('@',@mail)+1, len(@mail))
+	return @domain
+end
+
+select dbo.extractDomain('hemrishi@wordle.in')
+select dbo.extractDomain('hemrishi')
+
+
+--Merge
+create table targett(
+ID int primary key,
+Pname nvarchar(15),
+Loc nvarchar(15))
+
+create table #source(
+ID int primary key,
+Pname nvarchar(15),
+Loc nvarchar(15))
+
+insert into targett values
+(1, 'Norris', 'UK'),
+(2, 'Leclerc', 'Monaco'),
+(3, 'Ricciardo', 'Austria'),
+(4, 'Perez', 'Mexico'),
+(5, 'Zhou', 'China')
+
+insert into #source values
+(1, 'Norris', 'UK'),
+(2, 'Leclerc', 'Monaco'),
+(3, 'Ricciardo', 'Australia'),
+(6, 'Lauda', 'Austria'),
+(5, 'Guanyu', 'China')
+
+merge targett as target using #source as source
+on (target.ID = source.ID)
+when matched and (target.Pname <> source.Pname or target.Loc <> source.Loc)
+then update set target.Pname = source.Pname, target.Loc = source.Loc
+when not matched by target
+then insert values(source.ID, source.Pname, source.Loc);
+
+select * from targett
+
+
+--Soft deleting when source has incremental data
+update sales.customerdim
+set recordenddate=getdate(), iscurrent=0, isdeleted=1
+where customerID in(
+select customerID
+from sales.CustomerDim
+where IsCurrent = 1)
+and customerID in(
+select cusotmerID
+from #incremental
+where isdeleted=1)
