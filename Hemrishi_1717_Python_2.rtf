@@ -1,0 +1,390 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Wingdings;}{\f2\fnil\fcharset161 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 1. Data Manipulation with Pandas:\par
+\f1\'b7\f0  Given a dataset in the form of a dictionary, convert it to a DataFrame and perform\par
+the following tasks:\par
+\f1\'a7\f0  Remove rows with missing values.\par
+df_cleaned = df.dropna()\par
+print("\\nDataFrame after removing rows with missing values:")\par
+print(df_cleaned)\par
+\par
+\f1\'a7\f0  Group the data by 'Product' and calculate the total sales for each product.\par
+\f1\par
+\'a7\f0  Sort the results by total sales in descending order.\par
+\f1\par
+\'b7\f0  Create a pivot table that shows the sum of sales for each product, broken down\par
+by month.\par
+import pandas as pd\par
+data = \{\par
+    'Product': ['A', 'B', 'A', 'B', 'A'],\par
+    'Sales': [100, 150, 200, 300, 250],\par
+    'Month': ['Jan', 'Feb', 'Jan', 'Feb', 'Mar']\par
+\}\par
+df = pd.DataFrame(data)\par
+print("Initial DataFrame:")\par
+print(df)\par
+pivot_table = pd.pivot_table(df, values='Sales', index='Product', columns='Month', aggfunc='sum')\par
+print("\\nPivot table showing sum of sales for each product, broken down by month:")\par
+print(pivot_table)\par
+\par
+2. Data Cleaning:\par
+\f1\'b7\f0  Write a function that takes a DataFrame with various types of data (numeric,\par
+text, dates) and performs the following cleaning steps:\par
+\f1\'a7\f0  Replace all empty strings with NaN.\par
+\f1\'a7\f0  Fill numeric NaNs with the mean of their column.\par
+\f1\'a7\f0  Convert all text to lowercase.\par
+\f1\'b7\f0  Write a function that detects and removes outliers from a numeric column in a\par
+DataFrame using the IQR method.\par
+3. Lambda Functions and Map-Reduce:\par
+\f1\'b7\f0  Use a lambda function to \f2\u976?ilter out even numbers from a list of integers.\par
+numbers = [1, 2, 3, 4, 5, 8, 9, 10]\par
+filtered_numbers = list(filter(lambda x: x % 2 != 0, numbers))\par
+print("Original list:", numbers)\par
+print("Filtered list (odd numbers only):", filtered_numbers)\par
+\par
+\f1\'b7\f0  Use the reduce function to calculate the product of the remaining numbers.\par
+from functools import reduce\par
+numbers = [11,12,13,14,18]\par
+product = reduce(lambda x, y: x * y, numbers)\par
+print("List of numbers:", numbers)\par
+print("Product of numbers:", product)\par
+\par
+\f1\'b7\f0  Use a lambda function with the \f2\u976?ilter function to remove words from a list that\par
+are shorter than 4 characters. Then, use reduce to concatenate the remaining\par
+words into a single string.\par
+from functools import reduce\par
+words = ["\f0\lang1033 food\f2\lang9 ", "\f0\lang1033 love\f2\lang9 ", "\f0\lang1033 suit\f2\lang9 ", "\f0\lang1033 bar\f2\lang9 ", "\f0\lang1033 ball\f2\lang9 "]\par
+result_string = reduce(lambda x, y: x + " " + y, filter(lambda word: len(word) >= \f0\lang1033 3\f2\lang9 , words))\par
+print("List of words:", words)\par
+print("Concatenated string:", result_string)\par
+\par
+4. Data Visualization:\par
+\f1\'b7\f0  Using Matplotlib, create a line chart showing the trend of sales over time from\par
+the given dataset.\par
+\f1\'b7\f0  Customize the chart with labels, title, and legend.\par
+\f1\'b7\f0  Create a scatter plot showing the relationship between two numerical columns\par
+in a DataFrame. Add a trend line to the scatter plot.\par
+5. Data Aggregation:\par
+\f1\'b7\f0  Given a list of dictionaries representing transactions, write a function to\par
+aggregate the total amount spent by each user.\par
+\f1\'b7\f0  Write a function that calculates the moving average of the total amount spent by\par
+each user over a speci\f2\u976?ied window size.\par
+6. Exception Handling:\par
+\f1\'b7\f0  Write a function that handles division by zero and returns a meaningful error\par
+message when a division by zero occurs.\par
+\f1\'b7\f0  Write a function that takes a list of \f2\u976?ile paths and attempts to open each one,\par
+handling FileNotFoundError, PermissionError, and IOError, and logging the\par
+results.\par
+7. Working with Dates:\par
+\f1\'b7\f0  Write a function that takes a list of date strings in various formats and converts\par
+them to a standardized format (YYYY-MM-DD).\par
+\f1\'b7\f0  Write a function that calculates the number of business days between two given\par
+dates, excluding weekends and holidays.\par
+8. ETL Process:\par
+\f1\'b7\f0  Simulate an ETL process using Python that extracts data from a list of\par
+dictionaries, transforms it by normalizing numeric \f2\u976?ields, and loads it into a\par
+Pandas DataFrame.\par
+\f1\'b7\f0  Extend the ETL process to include a validation step that checks for data quality\par
+issues (e.g., missing values, outliers) before loading the data into the DataFrame.\par
+9. Data Normalization:\par
+\f1\'b7\f0  Write a function that normalizes the values in a DataFrame column to a range\par
+between 0 and 1.\par
+def normalize_column(column):\par
+    min_val = column.min()\par
+    max_val = column.max()\par
+    normalized_column = (column - min_val) / (max_val - min_val)\par
+    return normalized_column\par
+\par
+\f1\'b7\f0  Write a function that standardizes the values in a DataFrame column (mean=0,\par
+standard deviation=1).\par
+def standardize_column(column):\par
+    standardized_column = (column - column.mean()) / column.std()\par
+    return standardized_column\par
+\par
+10. Advanced List Comprehensions:\par
+\f1\'b7\f0  Given a list of numbers, create a new list containing the square roots of the even\par
+numbers only, using list comprehension.\par
+def square_roots_of_even_numbers(numbers):\par
+    square_roots = [math.sqrt(num) for num in numbers if num % 2 == 0]\par
+    return square_roots\par
+numbers = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\par
+square_roots_even = square_roots_of_even_numbers(numbers)\par
+print("Square roots of even numbers:", square_roots_even)\par
+\par
+\f1\'b7\f0  Given a list of tuples representing (name, score), create a new list containing\par
+names of students who scored above the average, using list comprehension.\par
+def names_above_average(scores):\par
+    if not scores:\par
+        return []\par
+    total_score = sum(score for _, score in scores)\par
+    average_score = total_score / len(scores)\par
+    above_average_names = [name for name, score in scores if score > average_score]\par
+    return above_average_names\par
+student_scores = [("Di", 80), ("Yogi", 75), ("Hemrishi", 90), ("Varsha", 85), ("Sharmila", 95)]\par
+above_average_students = names_above_average(student_scores)\par
+print("Students who scored above the average:", above_average_students)\par
+\par
+11. Unit Testing:\par
+\f1\'b7\f0  Write unit tests for a function that calculates the factorial of a number. Use the\par
+unittest framework.\par
+\f1\'b7\f0  Write unit tests for a function that checks if a given string is a palindrome.\par
+12. Decorators:\par
+\f1\'b7\f0  Create a decorator that logs the execution time of a function. Apply it to a\par
+function that sorts a large list.\par
+\f1\'b7\f0  Create a decorator that retries a function up to 3 times if it raises an exception,\par
+with a delay between retries.\par
+13. Concurrency with Threads:\par
+\f1\'b7\f0  Write a program that uses threading to calculate the sum of a large list of\par
+numbers by dividing the work among multiple threads.\par
+\f1\'b7\f0  Write a program that uses threading to fetch data from multiple URLs\par
+concurrently and print the status code of each response.\par
+14. Data Pipeline Simulation:\par
+\f1\'b7\f0  Simulate a data pipeline that processes a list of dictionaries, applying various\par
+transformations, and outputs the processed data as a list of dictionaries.\par
+\f1\'b7\f0  Extend the pipeline to include an error-handling stage that logs any errors\par
+encountered during processing.\par
+15. Con\f2\u976?iguration Management:\par
+\f1\'b7\f0  Write a Python script that reads con\f2\u976?iguration settings from a dictionary and\par
+uses them to perform a speci\u976?ic task.\par
+\f1\'b7\f0  Write a function that validates the con\f2\u976?iguration settings, ensuring that all\par
+required \u976?ields are present and have valid values.\par
+16. Handling Large Data Sets:\par
+\f1\'b7\f0  Write a function that processes a large list of numbers in chunks and calculates\par
+the average value of the list.\par
+\f1\'b7\f0  Write a function that processes a large list of strings in chunks, counts the\par
+frequency of each string, and returns a dictionary with the results.\par
+17. Class and Objects:\par
+\f1\'b7\f0  Create a class representing a bank account with methods to deposit, withdraw,\par
+and check balance. Ensure proper error handling for invalid operations.\par
+class BankAccount:\par
+    def __init__(self, account_number, initial_balance=0):\par
+        self.account_number = account_number\par
+        self.balance_inr = initial_balance\par
+    def deposit(self, amount):\par
+        if amount > 0:\par
+            self.balance_inr += amount\par
+            print(f"Deposit of \u8377?\{amount:.2f\} successful.")\par
+        else:\par
+            print("Invalid deposit amount. Please enter a positive number.")\par
+    def withdraw(self, amount):\par
+        if amount > 0:\par
+            if self.balance_inr >= amount:\par
+                self.balance_inr -= amount\par
+                print(f"Withdrawal of \u8377?\{amount:.2f\} successful.")\par
+            else:\par
+                print("Insufficient balance. Withdrawal not processed.")\par
+        else:\par
+            print("Invalid withdrawal amount. Please enter a positive number.")\par
+    def check_balance(self):\par
+    return self.balance_inr\par
+account = BankAccount('9876543210', 10000)\par
+account.deposit(5000)\par
+print(f"Current balance: \u8377?\{account.check_balance():.2f\}")\par
+account.withdraw(2000)\par
+print(f"Current balance: \u8377?\{account.check_balance():.2f\}")\par
+account.withdraw(-1000)\par
+account.deposit(-500)\par
+\par
+\f1\'b7\f0  Extend the bank account class to support multiple currencies, with methods to\par
+convert between currencies using a given exchange rate.\par
+class BankAccount:\par
+    def __init__(self, account_number):\par
+        self.account_number = account_number\par
+        self.balances = \{\}  # Dictionary to store balances by currency\par
+    def deposit(self, amount, currency='USD'):\par
+        if currency in self.balances:\par
+            self.balances[currency] += amount\par
+        else:\par
+            self.balances[currency] = amount\par
+    def withdraw(self, amount, currency='USD'):\par
+        if currency in self.balances and self.balances[currency] >= amount:\par
+            self.balances[currency] -= amount\par
+        else:\par
+            print(f"Insufficient balance in \{currency\} account.")\par
+    def check_balance(self, currency='USD'):\par
+        if currency in self.balances:\par
+            return self.balances[currency]\par
+        else:\par
+            return 0\par
+    def convert_to(self, amount, from_currency, to_currency, exchange_rate):\par
+        if from_currency in self.balances and self.balances[from_currency] >= amount:\par
+            converted_amount = amount * exchange_rate\par
+            self.deposit(converted_amount, to_currency)\par
+            self.withdraw(amount, from_currency)            \par
+            return converted_amount\par
+        else:\par
+            print(f"Insufficient balance in \{from_currency\} account or invalid conversion.")\par
+account = BankAccount('1234567890')\par
+account.deposit(1000, 'USD')\par
+account.deposit(500, 'EUR')\par
+account.deposit(200, 'GBP')\par
+print("Initial balances:")\par
+print("USD:", account.check_balance('USD'))\par
+print("EUR:", account.check_balance('EUR'))\par
+print("GBP:", account.check_balance('GBP'))\par
+converted_amount = account.convert_to(500, 'USD', 'EUR', 0.85)\par
+print(f"\\nConverted amount: \{converted_amount\} EUR")\par
+print("\\nBalances after conversion:")\par
+print("USD:", account.check_balance('USD'))\par
+print("EUR:", account.check_balance('EUR'))\par
+print("GBP:", account.check_balance('GBP'))\par
+\par
+18. Regular Expressions:\par
+\f1\'b7\f0  Write a function that validates email addresses using regular expressions.\par
+import re\par
+def validate_email(email):\par
+    pattern = r'^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$'\par
+    regex = re.compile(pattern)\par
+    if regex.match(email):\par
+        return True\par
+    else:\par
+        return False\par
+email1 = "some@random.com"\par
+print(f"\{email1\} is valid: \{validate_email(email1)\}")\par
+\par
+\f1\'b7\f0  Write a function that extracts all the dates from a given text string in the format\par
+(DD-MM-YYYY).\par
+import re\par
+def extract_dates(text):\par
+    date_pattern = r'\\b(\\d\{2\}-\\d\{2\}-\\d\{4\})\\b    dates = re.findall(date_pattern, text)\par
+    return dates\par
+text = "Couldnt hold 01-01-2024. and some random date 26-09-25"\par
+extracted_dates = extract_dates(text)\par
+print("Extracted dates:", extracted_dates)\par
+\par
+19. Data Encryption:\par
+\f1\'b7\f0  Write a Python script that encrypts and decrypts text using the Fernet symmetric\par
+encryption from the cryptography library.\par
+\f1\'b7\f0  Write a function that encrypts and decrypts a dictionary of sensitive data,\par
+preserving the structure of the dictionary\par
+20. Memory Management:\par
+\f1\'b7\f0  Write a program to monitor memory usage of a Python script and log it to the\par
+console at regular intervals.\par
+\f1\'b7\f0  Write a function that generates a large list of random numbers and uses memory\par
+pro\f2\u976?iling to identify any memory leaks.\par
+21. Parallel Processing:\par
+\f1\'b7\f0  Use the multiprocessing module to parallelize a CPU-bound task, such as\par
+calculating the prime numbers in a given range.\par
+\f1\'b7\f0  Write a program that uses the multiprocessing module to perform matrix\par
+multiplication in parallel.\par
+22. Error Handling:\par
+\f1\'b7\f0  Write a function that raises and handles custom exceptions to manage speci\f2\u976?ic\par
+error cases in a given task.\par
+class TaskError(Exception):\par
+    pass\par
+class TaskInputError(TaskError):\par
+    def __init__(self, message):\par
+        self.message = message\par
+        super().__init__(self.message)\par
+class TaskExecutionError(TaskError):\par
+    def __init__(self, message):\par
+        self.message = message\par
+        super().__init__(self.message)\par
+def perform_task(task_input):\par
+    try:\par
+       if not isinstance(task_input, int):\par
+            raise TaskInputError("Task input must be an integer.")\par
+        if task_input < 0:\par
+            raise TaskExecutionError("Task execution failed: negative input.")\par
+        print(f"Task performed with input: \{task_input\}")\par
+    except TaskInputError as e:\par
+        print(f"Error in task input: \{e.message\}")\par
+    except TaskExecutionError as e:\par
+        print(f"Error in task execution: \{e.message\}")\par
+    except Exception as e:\par
+        print(f"Unexpected error occurred: \{str(e)\}")\par
+perform_task(5)     \par
+perform_task(-2)    \par
+perform_task("abc")\par
+\par
+\f1\'b7\f0  Write a function that uses context managers to handle resources (e.g., database\par
+connections) and properly handles exceptions that may occur during resource\par
+usage.\par
+23. Recursion:\par
+\f1\'b7\f0  Write a recursive function to calculate the nth Fibonacci number.\par
+def fibonacci(n):\par
+    if n <= 0:\par
+        return 0\par
+    elif n == 1:\par
+        return 1\par
+    else:\par
+        return fibonacci(n-1) + fibonacci(n-2)\par
+n = 10\par
+result = fibonacci(n)\par
+print(f"The \{n\}th Fibonacci number is: \{result\}")\par
+\par
+\f1\'b7\f0  Write a recursive function to solve the Tower of Hanoi problem.\par
+def tower_of_hanoi(n, source, target, temp):\par
+    if n == 1:\par
+        print(f"Move disk 1 from \{source\} to \{target\}")\par
+        return\par
+    else:\par
+        tower_of_hanoi(n-1, source, temp, target)\par
+        print(f"Move disk \{n\} from \{source\} to \{target\}")\par
+        tower_of_hanoi(n-1, temp, target, source)\par
+n = 3\par
+tower_of_hanoi(n, 'A', 'C', 'B')\par
+\par
+24. Data Merging:\par
+\f1\'b7\f0  Given two lists of dictionaries, write a function to merge them based on a\par
+common key.\par
+def merge_lists_of_dicts(l1, l2, key):\par
+    merged_dict = \{\}\par
+    merged_list = []\par
+    for d in l1:\par
+        merged_dict[d[key]] = d\par
+    for d in l2:\par
+        if d[key] in merged_dict:\par
+            merged_dict[d[key]].update(d)\par
+        else:\par
+            merged_dict[d[key]] = d\par
+    merged_list = list(merged_dict.values())\par
+    return merged_list\par
+l1 = [\par
+    \{'id': 1, 'name': 'Adith', 'age': 19\},\par
+    \{'id': 2, 'name': 'Hemrishi', 'age': 22\},\par
+    \{'id': 3, 'name': 'Sharmila', 'age': 22\},\par
+]\par
+l2 = [\par
+    \{'id': 2, 'city': 'Bengaluru'\},\par
+    \{'id': 3, 'city': 'Bengaluru'\},\par
+    \{'id': 4, 'city': 'Kundapura'\},\par
+]\par
+merged_list = merge_lists_of_dicts(l1, l2, 'id')\par
+print('Merged List of Dictionaries:')\par
+for d in merged_list:\par
+    print(d)\par
+\par
+\f1\'b7\f0  Write a function that merges multiple DataFrames based on a common key and\par
+handles con\f2\u976?licts by keeping the most recent data.\par
+25. Statistical Analysis:\par
+\f1\'b7\f0  Write a function that calculates the mean, median, and mode of a list of numbers.\par
+import statistics\par
+def calculate_statistics(numbers):\par
+    n = len(numbers)\par
+    mean = sum(numbers) / n\par
+    median = statistics.median(numbers)\par
+    mode = statistics.mode(numbers)\par
+    return mean, median, mode\par
+numbers = [6,7,8,9]\par
+mean, median, mode = calculate_statistics(numbers)\par
+print(f'List: \{numbers\}')\par
+print(f'Mean: \{mean\}')\par
+print(f'Median: \{median\}')\par
+print(f'Mode: \{mode\}')\par
+\par
+\f1\'b7\f0  Write a function that calculates the standard deviation and variance of a list of\par
+numbers.\par
+def calculate_statistics(numbers):\par
+    n = len(numbers)\par
+    mean = sum(numbers) / n\par
+    variance = sum((x - mean) ** 2 for x in numbers) / n\par
+    std_deviation = math.sqrt(variance)\par
+    return variance, std_deviation\par
+numbers = [30,11,14,6,28,2]\par
+variance, std_deviation = calculate_statistics(numbers)\par
+print(f'List: \{numbers\}')\par
+print(f'Variance: \{variance\}')\par
+print(f'Standard Deviation: \{std_deviation\}')\par
+}
+ 
