@@ -1,0 +1,58 @@
+--Functions
+def salary_inc(salary, prcntge):
+
+    return(salary + salary*prcntge)
+
+salary = 1000000
+
+print("Old Salary",salary)
+
+salary = salary_inc(salary, 0.2)
+
+print("New Salary",salary)
+
+--Class
+class Employee:
+
+    def __init__(self, name, ID, dept, salary):
+
+        self.name = name
+
+        self.ID = ID
+
+        self.dept = dept
+
+        self.salary = salary
+
+        print("New employee",self.name,"with id",self.ID,"from department",self.dept,"added")
+
+
+    def __str__(self):
+
+        return self.name
+
+
+    def salary_inc(self, prcntge):
+
+        self.salary = self.salary + self.salary*prcntge
+
+        print("Salary updated")
+
+
+A = Employee("Hemrishi", "1717", "DE", 1000000)
+
+B = Employee("Sharmila", "17778", "DEV", 1400000)
+print(A)
+
+print(B)
+A.salary_inc(0.2)
+print(A.salary)
+B.salary_inc(0.2)
+
+print(B.salary)
+
+--CLOUD
+created azure account
+created storage resource. 1 blob and 1 adls gen 2.
+explored all the config options for creating a storage resource.
+created vm and logged in to it.
