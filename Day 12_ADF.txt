@@ -1,0 +1,9 @@
+Explored Total Cost of Ownership
+Explored Service Health service
+
+created a datafactory
+created Integration runtime, linked services, datasets, activities and pipelines
+created a pipeline with a single copy data activity.
+created key vault service and gave access to datafactory to use secret instead of hardcoding the key while creating linked service to the adlsg2 storage.
+created dataflow.
+explored all general activities except set and append variable
